@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import studentHome from '@/views/student/home'
+import student from '@/views/student/'
 import login from '@/views/login'
 
 Vue.use(Router)
@@ -8,9 +9,15 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      path: '/student',
+      name: 'student',
+      component: student,
+      children: [
+        {
+          path: '',
+          component: studentHome
+        }
+      ]
     },
     {
       path: '/login',
