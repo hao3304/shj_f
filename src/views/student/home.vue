@@ -5,11 +5,11 @@
         <ul class="tab">
           <li>
             <a href="javascript:;">
-              <i class="iconfont icon-tiwen"></i>提问</a>
+              <i class="iconfont icon-tiwen"></i>推荐</a>
           </li>
           <li>
             <a href="javascript:;">
-              <i class="iconfont icon-huida"></i>回答</a>
+              <i class="iconfont icon-huida"></i>等待问答</a>
           </li>
           <li>
             <a href="javascript:;"> <i class="iconfont icon-tianxie"></i>写文章</a>
@@ -18,8 +18,51 @@
       </div>
 
       <div class="contents">
-        <div class="card" style="padding: 10px;">
-            具体问题内容
+        <div class="card" v-for="n in 3" style="padding: 10px;" :key="n">
+          <div class="article">
+            <div class="article-from">
+              <div class="user-avatar">
+                <img src="/static/images/avatar.jpg" alt="">
+              </div>
+              <div class="user-name">
+                杰克叔叔，
+              </div>
+              <div class="user-form">
+                杭州学军中学
+              </div>
+            </div>
+            <div class="article-title">
+              <a href="javascript:;">关于A+B问题的解决思路？</a>
+            </div>
+            <div>
+              <div class="article-extra"></div>
+              <div class="article-info">
+                高中同学，
+                貌不惊人，
+                一年四季校服，
+                手上一块儿童表，
+                脚上回力安踏贵人鸟，
+                食堂吃饭永远一荤两素，
+                只喝一加仑装的农夫山泉，
+                话不多朋友很少...
+                <a href="javascript:;" class="expand">
+                  阅读全文 <Icon type="chevron-down"></Icon>
+                </a>
+              </div>
+            </div>
+
+            <div class="article-bar">
+              <Button type="primary" icon="arrow-up-b">3.1k</Button>
+              <a class="ivu-btn ">
+                <i class="ivu-icon ivu-icon-arrow-down-b"></i>
+              </a>
+
+              <a href="javascript:;" class="btn-answer">
+                <Icon type="chatbubble"></Icon>
+                345 个回答
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -106,83 +149,148 @@
       box-sizing: border-box;
     }
 
-      .my-avatar {
-        text-align: center;
+    .article {
+      padding: 10px 10px 0 10px;
+      .article-from{
+        display: flex;
+        .user-avatar{
+          width: 25px;
+          height: 25px;
+          text-align: left;
+          margin-right: 10px;
+          img{
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .user-name {
+          color: #444;
+          font-size: 15px;
+          font-weight: 600;
+        }
+
+        .user-form{
+          font-size: 14px;
+          color: #646464;
+        }
+      }
+      .article-title{
         margin-top: 10px;
-        .avatar{
-          display: inline-block;
-          width: 120px;
-          height: 120px;
-          background: url("/static/images/person.jpg") no-repeat;
-          background-size: contain;
-          border-radius: 50%;
-          box-shadow:  0 2px 7px 0 rgba(0,0,0,.26);
-        }
-        .name{
-          padding: 5px 0;
-          border-bottom: 1px solid #f5f5f5;
-        }
-      }
-
-      .my-info{
-        .my-info-detail{
-          display: flex;
-          .block {
-            flex: 1;
-            text-align: center;
-            a{
-              font-size: 14px;
-              line-height: 42px;
-              color: #1a1a1a;
-              a:hover{
-                color: #175199;
-              }
-
-              strong{
-                color: #175199;
-              }
-            }
+        a{
+          font-size: 18px;
+          font-weight: 600;
+          line-height: 1.6;
+          color: #1a1a1a;
+          &:hover{
+            color: #175199;
           }
         }
       }
 
-      header{
-        padding: 0 20px;
+      .article-info{
+        margin-top: 10px;
+        line-height: 1.67;
+        color: #1a1a1a;
+        font-size: 15px;
+        .expand {
+          color: #175199;
+          &:hover{
+            color: gray;
+          }
+        }
+      }
+
+      .article-bar{
+        margin-top: 10px;
+
+        .btn-answer{
+          margin-left: 24px;
+          color: #8590a6;
+          font-size: 14px;
+          &:hover{
+            color: #77839c;
+          }
+        }
+      }
+    }
+
+    .my-avatar {
+      text-align: center;
+      margin-top: 10px;
+      .avatar{
+        display: inline-block;
+        width: 120px;
+        height: 120px;
+        background: url("/static/images/person.jpg") no-repeat;
+        background-size: contain;
+        border-radius: 50%;
+        box-shadow:  0 2px 7px 0 rgba(0,0,0,.26);
+      }
+      .name{
+        padding: 5px 0;
         border-bottom: 1px solid #f5f5f5;
-        line-height: 42px;
       }
+    }
 
-      .lesson-list{
-        .lesson{
-          padding: 20px;
-          display: flex;
-          .lesson-pic{
-            background-image: url(https://user-gold-cdn.xitu.io/2017/11/20/15fd7937bfca9d71?imageView2/1/w/200/h/280/q/95/format/webp/interlace/1);
-            background-size: cover;
-            height: 72px;
-            width: 52px;
-            box-shadow: 0 2px 7px 0 rgba(0,0,0,.26);
-          }
-
-          .lesson-info{
-            flex: 1;
-            padding: 0 10px;
-            h5{
-              margin: 0;
-              font-weight: 500;
-              font-size: 14px;
-              color: #333;
-              line-height: 1.3;
+    .my-info{
+      .my-info-detail{
+        display: flex;
+        .block {
+          flex: 1;
+          text-align: center;
+          a{
+            font-size: 14px;
+            line-height: 42px;
+            color: #1a1a1a;
+            a:hover{
+              color: #175199;
             }
-            p{
-              margin: 5px 0 0 0;
-              color: #878c90;
-              font-size: 12px;
-              line-height: 2;
+
+            strong{
+              color: #175199;
             }
           }
         }
       }
+    }
+
+    header{
+      padding: 0 20px;
+      border-bottom: 1px solid #f5f5f5;
+      line-height: 42px;
+    }
+
+    .lesson-list{
+      .lesson{
+        padding: 20px;
+        display: flex;
+        .lesson-pic{
+          background-image: url(https://user-gold-cdn.xitu.io/2017/11/20/15fd7937bfca9d71?imageView2/1/w/200/h/280/q/95/format/webp/interlace/1);
+          background-size: cover;
+          height: 72px;
+          width: 52px;
+          box-shadow: 0 2px 7px 0 rgba(0,0,0,.26);
+        }
+
+        .lesson-info{
+          flex: 1;
+          padding: 0 10px;
+          h5{
+            margin: 0;
+            font-weight: 500;
+            font-size: 14px;
+            color: #333;
+            line-height: 1.3;
+          }
+          p{
+            margin: 5px 0 0 0;
+            color: #878c90;
+            font-size: 12px;
+            line-height: 2;
+          }
+        }
+      }
+    }
 
     .my-test{
       display: flex;
