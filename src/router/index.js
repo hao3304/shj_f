@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router'
-import studentHome from '@/views/student/home'
 import student from '@/views/student/'
 import login from '@/views/login'
 
@@ -14,34 +13,19 @@ export default new Router({
       children: [
         {
           path: '',
-          component: studentHome
+          component: resolve => { require(['@/views/student/home'], resolve); }
+        },
+        {
+          path: 'lesson',
+          component: resolve => { require(['@/views/student/lesson'], resolve); }
         }
       ]
     },
     {
       path: '/login',
-      alias:'/',
+      alias: '/',
       name: 'login',
       component: login
-    },
-    {
-      path: '/test',
-      component: (resolve,reject)=>{
-        setTimeout(()=>{
-          resolve({
-            template:`
-              <div>
-              {{name}}
-                <Icon type="arrow-expand"></Icon>
-              </div>
-            `,
-            data(){
-              return {name:"jack"}
-            }
-          })
-
-        },2000)
-      }
     }
   ]
 })
