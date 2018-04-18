@@ -17,6 +17,11 @@
               <a href="#"><Icon type="checkmark"></Icon>  上海外国语大学附中编程班</a>
             </li>
           </ul>
+          <div class="dropdown-btn">
+            <a href="#">
+                <Icon type="plus"></Icon>
+              加入班级</a>
+          </div>
         </div>
     </span>
     <ul class="nav">
@@ -169,18 +174,31 @@
         .dropdown-list {
           padding: 15px 0;
           border-top: 1px solid #f2f2f2;
+          border-bottom: 1px solid #eaeaea;
           li{
             list-style: none;
-            line-height: 38px;
+
             a{
               display: block;
               font-size: 14px;
               padding-left: 20px;
+              line-height: 38px;
               color: #666;
             }
             &:hover {
               background-color: #f2f2f2;
             }
+          }
+        }
+        .dropdown-btn{
+          padding: 12px 0;
+          font-size: 14px;
+          &:hover{
+            background-color: #f2f2f2;
+          }
+          a{
+            display: block;
+            padding-left: 40px;
           }
         }
       }
