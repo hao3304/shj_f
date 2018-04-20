@@ -11,30 +11,52 @@
         </li>
       </ul>
       <div class="form">
-        <input v-model="form.username" type="text" placeholder="请输入您的用户名">
-        <input v-model="form.password" type="password" placeholder="请输入您的密码">
+        <input v-model="form.username" required type="text" placeholder="请输入您的用户名">
+        <input v-model="form.password" required type="password" placeholder="请输入您的密码">
       </div>
-      <button @click="onLogin" class="submit">
+      <Button @click="onLogin" :loading="loading" class="submit">
         登录
-      </button>
+      </Button>
+      <p class="error">{{errmsg}}</p>
+
     </section>
     <vue-particles color="#fff"></vue-particles>
   </div>
 </template>
 <script>
+  import { Login } from '@/services/login'
+  import Cookies from 'js-cookie'
   export default {
     name: 'login',
     data(){
       return {
         form:{
-          username:'demo',
-          password:'demo'
-        }
+          username:'',
+          password:''
+        },
+        loading: false,
+        errmsg: ''
       }
     },
     methods: {
       onLogin () {
-        this.$router.push('/student')
+        this.loading =true;
+        Login(this.form).then(rep=>{
+          this.loading = false;
+          if(rep.errno == 0 ) {
+            this.errmsg = "";
+            Cookies.set('token', rep.data , { expires: 1 });
+            this.$store.commit('setToken', rep.data)
+            this.$router.push('/home')
+          }else{
+            this.errmsg = rep.errmsg;
+          }
+        }).catch(e=> {
+            this.loading = false;
+            this.errmsg = '服务错误！';
+        })
+
+
       }
     }
   }
@@ -54,7 +76,7 @@
       left: 50%;
       margin-left: -150px;
       box-sizing: border-box;
-      padding: 0 10px;
+      padding: 0 10px 10px 10px;
       top: 50%;
       margin-top: -200px;
       h5{
@@ -124,7 +146,7 @@
       .submit{
         width: 100%;
         border:none;
-        margin: 20px 0;
+        margin: 20px 0 0 0;
         background-color: #0f88eb;
         border-radius: 3px;
         line-height: 41px;
@@ -132,11 +154,17 @@
         box-shadow: none;
         font-family: 'Microsoft Yahei';
         font-size: 15px;
+        padding: 0;
         cursor: pointer;
 
         &:hover {
           background-color: #2d96ec;
         }
+      }
+
+      .error {
+        color: red;
+        padding-top: 10px;
       }
     }
   }

@@ -1,25 +1,23 @@
 import Vue from 'vue';
 import Router from 'vue-router'
-import student from '@/views/student/'
 import login from '@/views/login'
+import LessonRouter from  './lesson'
+import LessionView from '@/views/lesson'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/student',
-      component: student,
-      children: [
-        {
-          path: '',
-          component: resolve => { require(['@/views/student/home'], resolve); }
-        },
-        {
-          path: 'lesson',
-          component: resolve => { require(['@/views/student/lesson'], resolve); }
-        }
-      ]
+      path: '/home',
+      name: 'home',
+      component: resolve => { require(['@/views/student/home'], resolve); }
+    },
+    {
+      path: '/lesson',
+      name: 'lesson',
+      component: LessionView,
+      children: LessonRouter
     },
     {
       path: '/login',

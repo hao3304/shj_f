@@ -25,13 +25,10 @@
         </div>
     </span>
     <ul class="nav">
-      <li class="active">
-        <router-link to="/student">
-          <Icon type="android-home"></Icon> 首页
-        </router-link>
-      </li>
-      <li>
-        <router-link to="/student/lesson"><Icon type="ios-book"></Icon> 课程</router-link>
+      <li :class="{active: active == m.url}" v-for="(m, index) in menus" :key="index">
+        <a href="javascript:;" @click="onPath(m.url)">
+          <Icon :type="m.icon"></Icon> {{m.name}}
+        </a>
       </li>
       <li>
         <a href="javascript:;">更多应用 <Icon type="ios-arrow-down"></Icon></a>
@@ -52,10 +49,8 @@
               </li>
             </ul>
           </div>
-
           <a href="javascript:;">
-            <Avatar icon="person" />
-            &nbsp;演示帐号
+            &nbsp;在线编程平台
           </a>
         </Poptip>
       </li>
@@ -63,15 +58,32 @@
   </header>
 </template>
 <script>
+  import Cookies from 'js-cookie'
+
   export default {
     name:'navigation',
     data() {
         return {
-          dropUserHeight: 0
+          dropUserHeight: 0,
+          active: 'home',
+          menus:[
+            {
+              name: '首页',
+              icon: 'android-home',
+              url: 'home'
+            },
+            {
+              name: '课程',
+              icon: 'ios-book',
+              url: 'lesson'
+            }
+          ]
         }
     },
     methods: {
       onLogout() {
+        Cookies.remove('token');
+        this.$store.commit('setToken','')
         this.$router.push('/login')
       },
       onMouseEnter() {
@@ -84,7 +96,16 @@
         this.$dropUser.animate({height:0},'fast','swing', ()=> {
           this.$dropUser.hide().height(this.dropUserHeight);
         })
+      },
+      onPath(url) {
+        if(this.active != url) {
+          this.$router.push({name: url});
+          this.active = url;
+        }
       }
+    },
+    created() {
+      this.active = window.location.hash.split("/")[1];
     },
     mounted() {
       this.$dropUser =  $("#dropdown-user");
@@ -96,8 +117,9 @@
   .navigation{
     height: 52px;
     background-color: #065389;
-    /*box-shadow: 0 1px 3px rgba(26,26,26,.1);*/
+    box-shadow: 0 2px 3px rgba(0,0,0,.3);
     padding: 0 40px 0 0;
+    z-index: 1000;
 
     .ivu-poptip-body{
       padding: 0;
@@ -157,7 +179,7 @@
 
       .dropdown-user{
         position: absolute;
-        z-index: 350;
+        z-index: 1000;
         top: 52px;
         background-color: #fff;
         width: 309px;
@@ -223,7 +245,7 @@
           font-size: 16px;
           display: block;
           color: #fff;
-          padding: 0 20px;
+          padding: 0 30px;
           text-decoration: none;
           line-height: 52px;
           position: relative;
